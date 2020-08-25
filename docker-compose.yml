@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: "2"
+
+services:
+  api:
+    build:
+      # build from Dockerfile
+      context: .
+      dockerfile: ./api/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    entrypoint: "python3"
+    command: ["app.py"]
+
+  sql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./data:/var/lib/postgresql/data"
+    environment:
+      - "POSTGRES_PASSWORD:Neile@123"
+      - "PGDATA:/var/lib/postgresql/data/pgdata"
